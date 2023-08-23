@@ -1,0 +1,23 @@
+---
+apiVersion: jimdo.com/v1
+kind: WonderlandService
+metadata:
+  name: review-links
+spec:
+  scale: 1
+  components:
+    - name: app
+      image: {{ env `IMAGE_NAME` }}
+      healthcheck:
+        readiness:
+          port: 80
+          path: /
+  http-endpoints:
+    - component: app
+      container-port: 80
+      public-domains:
+        - review-links.stage.jimdo.systems
+      healthcheck-path: /
+
+  notifications:
+    slack: "#dev-null"
