@@ -10,7 +10,8 @@ push: build
 	wl2 docker push $(IMAGE_NAME)
 
 deploy: push
-	wl2 -e stage deploy -f wonderland2.yaml
+	IMAGE_NAME=$(IMAGE_NAME) \
+			   wl2 -e stage deploy -f wonderland2.yaml
 
 run: build
 	docker run -p 8080:80 $(PLATFORM) $(IMAGE_NAME)
